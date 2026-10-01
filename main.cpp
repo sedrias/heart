@@ -10,10 +10,11 @@
 
 const std::string g_pink{"\x1b[38;2;255;105;180m"};
 const std::string g_reset{"\x1b[0m"};
-const std::string g_word{"i love you"};
+const std::string g_word{"love you"};
 const std::string g_home{"\x1b[H"};
 const std::string g_clear{"\x1b[2J"};
 const std::string g_hide{"\x1b[?25l"};
+const std::string g_name{"my Lada"};
 
 struct Word {
     double t;
@@ -61,6 +62,12 @@ int main() {
                     }
                 }
             }
+        }
+        int nameRow{height / 2 + 1};
+        int nameCol{static_cast<int>(width / 2 - std::ssize(g_name) / 2)};
+        for (int i = 0; i < std::ssize(g_name); ++i) {
+            screen[nameRow][nameCol + i] = g_name[i];
+            light[nameRow][nameCol + i] = 1.0;
         }
         std::string output;
         output += g_home;
