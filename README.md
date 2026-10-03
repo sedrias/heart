@@ -15,6 +15,11 @@ and we're going to have snowball fights and build snowmen!
 
 On October 3, 2026, I'll make a commit with a small addition to this surprise - look forward to it!
 
+UPD. Here it is, just like I promised!!! A few commits and a new version of heart.exe - I hope you like it.
+Once again, happy 5 months, my kitten! I love you!
+
+P.S. Delete the old heart.exe so the names don't conflict.
+
 I love you ❤️
 
 ## How to open it
@@ -31,6 +36,10 @@ I love you ❤️
 - The heart shape comes from a math formula:
   x = 16·sin³(t), y = 13·cos(t) − 5·cos(2t) − 2·cos(3t) − cos(4t)
 - Words appear at random points on the curve, slowly glow and fade away
+- The heart beats: its size follows sin(t), and the name in the center glows in the same rhythm
+- Half of the words are pink, half are purple
+- The piggy in the middle is pixel art: a small text map where every pixel
+  is painted with a background color
 - Colors are drawn with ANSI escape codes, ~60 frames per second
 - Written in C++23
 
