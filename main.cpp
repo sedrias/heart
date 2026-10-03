@@ -14,6 +14,7 @@ const std::string g_home{"\x1b[H"};
 const std::string g_clear{"\x1b[2J"};
 const std::string g_hide{"\x1b[?25l"};
 const std::string g_name{"my Lada"};
+const std::string g_noFill{"\x1b[49m"};
 
 struct Color {
     int r;
@@ -23,6 +24,18 @@ struct Color {
 
 const Color g_pink{255, 105, 180};
 const Color g_purple{170, 85, 255};
+const Color g_pigBody{255, 160, 200};
+const Color g_snout{225, 90, 150};
+
+// clang-format off
+const std::vector<std::string> g_pig{"  ####            ####  ",
+                                     "########################",
+                                     "####  ############  ####",
+                                     "######oo  oooo  oo######",
+                                     "######oooooooooooo######",
+                                     "  ####################  ",
+                                     "    ##  ##    ##  ##    "};
+// clang-format on
 
 struct Word {
     double t;
@@ -32,6 +45,12 @@ struct Word {
 
 std::string paint(Color color, double brightness) {
     return "\x1b[38;2;" + std::to_string(static_cast<int>(color.r * brightness)) + ";" +
+           std::to_string(static_cast<int>(color.g * brightness)) + ";" +
+           std::to_string(static_cast<int>(color.b * brightness)) + "m";
+}
+
+std::string fill(Color color, double brightness) {
+    return "\x1b[48;2;" + std::to_string(static_cast<int>(color.r * brightness)) + ";" +
            std::to_string(static_cast<int>(color.g * brightness)) + ";" +
            std::to_string(static_cast<int>(color.b * brightness)) + "m";
 }
@@ -77,18 +96,37 @@ int main() {
                 }
             }
         }
-        int nameRow{height / 2 + 1};
+        int nameRow{height / 2 + 4};
         int nameCol{static_cast<int>(width / 2 - std::ssize(g_name) / 2)};
         for (int i = 0; i < std::ssize(g_name); ++i) {
             screen[nameRow][nameCol + i] = g_name[i];
             light[nameRow][nameCol + i] = 0.7 + 0.3 * beat;
         }
+        int pigRow{height / 2 - 3};
+        int pigCol{static_cast<int>(width / 2 - std::ssize(g_pig[0]) / 2)};
+        for (int r = 0; r < std::ssize(g_pig); ++r) {
+            for (int c = 0; c < std::ssize(g_pig[r]); ++c) {
+                char pixel = g_pig[r][c];
+                if (pixel == ' ') {
+                    continue;
+                }
+                screen[pigRow + r][pigCol + c] = '#';
+                light[pigRow + r][pigCol + c] = 1.0;
+                colors[pigRow + r][pigCol + c] = pixel == '#' ? g_pigBody : g_snout;
+            }
+        }
         std::string output;
         output += g_home;
         for (int r = 0; r < height; ++r) {
             for (int c = 0; c < width; ++c) {
-                output += paint(colors[r][c], light[r][c]);
-                output += screen[r][c];
+                if (screen[r][c] == '#') {
+                    output += fill(colors[r][c], light[r][c]);
+                    output += ' ';
+                    output += g_noFill;
+                } else {
+                    output += paint(colors[r][c], light[r][c]);
+                    output += screen[r][c];
+                }
             }
             output += '\n';
         }
