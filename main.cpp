@@ -40,6 +40,8 @@ int main() {
     std::vector<Word> words;
     int frame{0};
     while (true) {
+        double beat{std::sin(frame * 0.1)};
+        double scale{1.0 + 0.08 * beat};
         std::vector<std::string> screen(height, std::string(width, ' '));
         std::vector<std::vector<double>> light(height, std::vector<double>(width, 0.0));
         if (frame % 3 == 0) {
@@ -52,8 +54,8 @@ int main() {
             double x{16 * std::pow(std::sin(t), 3)};
             double y{13 * std::cos(t) - 5 * std::cos(2 * t) - 2 * std::cos(3 * t) -
                      std::cos(4 * t)};
-            int col{static_cast<int>(width / 2 + x * 1.4 - (std::ssize(g_word) / 2))};
-            int row{static_cast<int>(height / 2 - y * 0.7)};
+            int col{static_cast<int>(width / 2 + x * 1.4 * scale- (std::ssize(g_word) / 2))};
+            int row{static_cast<int>(height / 2 - y * 0.7 * scale)};
             if (row >= 0 && row < height) {
                 for (int i = 0; i < std::ssize(g_word); ++i) {
                     if (col + i >= 0 && col + i < width) {
@@ -67,7 +69,7 @@ int main() {
         int nameCol{static_cast<int>(width / 2 - std::ssize(g_name) / 2)};
         for (int i = 0; i < std::ssize(g_name); ++i) {
             screen[nameRow][nameCol + i] = g_name[i];
-            light[nameRow][nameCol + i] = 1.0;
+            light[nameRow][nameCol + i] = 0.7 + 0.3 * beat;
         }
         std::string output;
         output += g_home;
