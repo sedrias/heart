@@ -15,12 +15,16 @@ and we're going to have snowball fights and build snowmen!
 
 On October 3, 2026, I'll make a commit with a small addition to this surprise - look forward to it!
 
+I love you ❤️
+
+## Here's the promised update!!!
+
 UPD. Here it is, just like I promised!!! A few commits and a new version of heart.exe - I hope you like it.
 Once again, happy 5 months, my kitten! I love you!
 
 P.S. Delete the old heart.exe so the names don't conflict.
 
-I love you ❤️
+And one more thing - I love you 💜
 
 ## How to open it
 
