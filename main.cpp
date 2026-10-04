@@ -84,8 +84,8 @@ int main() {
             double x{16 * std::pow(std::sin(t), 3)};
             double y{13 * std::cos(t) - 5 * std::cos(2 * t) - 2 * std::cos(3 * t) -
                      std::cos(4 * t)};
-            int col{static_cast<int>(width / 2 + x * 1.4 * scale - (std::ssize(g_word) / 2))};
-            int row{static_cast<int>(height / 2 - y * 0.7 * scale)};
+            int col{static_cast<int>(width / 2.0 + x * 1.4 * scale - (std::ssize(g_word) / 2.0))};
+            int row{static_cast<int>(height / 2.0 - y * 0.7 * scale)};
             if (row >= 0 && row < height) {
                 for (int i = 0; i < std::ssize(g_word); ++i) {
                     if (col + i >= 0 && col + i < width) {
@@ -136,7 +136,7 @@ int main() {
         for (Word& word : words) {
             ++word.age;
         }
-        std::erase_if(words, [lifetime](const Word& word) { return word.age > lifetime; });
+        std::erase_if(words, [](const Word& word) { return word.age > lifetime; });
         ++frame;
     }
     return 0;
